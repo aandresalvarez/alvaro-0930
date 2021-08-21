@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  api:
+    container_name: "docker-fastapi-spacy"
+    build: .
+    ports:
+      - 8080:8000
+    volumes:
+      - ./app:/usr/src/app
