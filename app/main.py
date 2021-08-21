@@ -23,11 +23,6 @@ class Sentences_NER(BaseModel):
 
 app = FastAPI(title="spacy NER", description="Text label extraction NER")
 
-# @app.get("/")
-# def read_root():
-#     return {"Hello": "World"}
-
-
 
 @app.post("/ner")
 async def read_sentence(sentence_obj: Sentences_NER):
@@ -40,17 +35,6 @@ async def read_sentence(sentence_obj: Sentences_NER):
         results="Error: This is the result if no input"
            
     return {"ner_result":results}
-
-
-# @app.get("/items/{item_id}")
-# def read_item(item_id: int, q: Optional[str] = None):
-#     # arr=[]
-#     # nlp = spacy.load('en_core_web_sm')
-#     # sentence = "Apple is looking at buying U.K. startup for $1 billion"
-#     # doc = nlp(sentence)
-#     # for ent in doc.ents:
-         
-#     return {"item_id": item_id, "q": arr}
 
 
         
