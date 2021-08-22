@@ -7,7 +7,8 @@ import spacy
 
 ## ++++++++ Spacy Model ++++++++++
 
-nlp = spacy.load('en_core_web_sm')
+nlp = spacy.load('en_core_web_sm') #  for better predictions we could install and use en_core_web_lg
+
 def model_ner_spacy(sentence):
     arr=[]
     doc = nlp(sentence)

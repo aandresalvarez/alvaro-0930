@@ -1,8 +1,8 @@
 FROM python:3.8-slim
 
-WORKDIR /usr/src/app
-ADD requirements.txt .
-
+# WORKDIR /usr/src/app
+#ADD requirements.txt .
+COPY ./api/requirements.txt requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 RUN apt-get update
 RUN apt-get install -y build-essential python-dev git
