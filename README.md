@@ -2,7 +2,7 @@
 
 ##  Named Entity Recognition Service
 
-Intructions:
+Instructions:
 
 * To start all services : 
 ```console
@@ -20,7 +20,7 @@ http://localhost:8080/docs
 
 ### WHAT IS PENDING?
 
-Finish the code for the file [ner_ui.py](other_file.md)
+Finish the code for the file [ner_ui.py](ner_ui.py)
 
 
     TO DO LIST:
