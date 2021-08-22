@@ -17,7 +17,7 @@ http://localhost:10101/ner_ui
 ```url
 http://localhost:8080/docs
 ```
-the code of the Fast-API service executing spaCy model is here: [main.py](/api/main.py)
+the code of the Fast-API service executing spaCy model is here: [main.py](/api/app/main.py)
 
 ### WHAT IS PENDING?
 
