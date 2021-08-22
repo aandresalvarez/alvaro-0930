@@ -1,35 +1,32 @@
-# version: '3.8'
-# services:
-#   api:
-#     container_name: "docker-fastapi-spacy"
-#     build: .
-#     ports:
-#       - 8080:8000
-#     volumes:
-#       - ./app:/usr/src/app
- 
 version: '3.8'
-
 services:
   api:
     container_name: "docker-fastapi-spacy"
+    build: ./api
+    ports:
+      - 8080:8000
+    volumes:
+      - ./api/app:/usr/src/app
+  app:
+    container_name: "python-wavecode"
     build:
       context: .
-      dockerfile: ./api/Dockerfile
-    working_dir: /usr/src/app
+      dockerfile: ./ui/python/Dockerfile
+    working_dir: /usr/src
     environment:
       # https://h2oai.github.io/wave/docs/configuration#configuring-your-app
       - H2O_APP_ADDRESS=http://server:8000
       - H2O_WAVE_ADDRESS=http://server:10101
     volumes:
-      - .:/usr/src/app
+      - .:/usr/src
     depends_on:
       - server
     tty: true
   server:
+    container_name: "wave-server"
     build:
       context: .
-      dockerfile: ./wave/Dockerfile
+      dockerfile: ./ui/wave/Dockerfile
       args:
         - WAVE_VERSION=0.16.0
     working_dir: /usr/wave
