@@ -1,53 +1,61 @@
-# Import `Site` and the `ui` module from the `h2o_wave` package
+"""
+
+WORK IN PROGRESS
+
+TO DO LIST:
+
+    - Fix the API request in the function Call_NER_Api(sentence) 
+        Current error:
+        Max retries exceeded with url: /ner/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f9a292cecd0>: Failed to establish a new connection: [Errno 111] Connection refused')  
+        
+
+    - Implement this page vie "wave run"  instead of a static page
+      Example : https://wave.h2o.ai/docs/tutorial-counter
+
+
+    -   Assembble API Call and UI to return Entities       
+
+
+RUN:
+
+If you're running this file on your local machine,
+this page will refer to http://localhost:10101/ner_ui.
+
+"""
+
+
 from h2o_wave import site, ui,main
-import time
 import requests
 
-def mifun(text):
-    if len(text)<1:
-        return text
+
+
+#++++++++++++++++++API CALL++++++++++++
+
+url = "http://api:8000/ner"
+def Call_NER_Api(sentence):
+    payload = "{\"text\": \"The cat is the great animal in the house\"}"
+    headers = {
+    'Content-Type': 'application/json'
+    }
+
+    if sentence and not sentence.isspace():
+        response = requests.request("POST", url, headers=headers, data = payload)
+        return response.text.encode('utf8')
     else:
-        response = requests.post('http://api/ner', data = {'text':'Each component, API-Service'})
-        #print(response)
-        return response
-# Get the web page at route '/demo'.
-# If you're running this example on your local machine,
-# this page will refer to http://localhost:10101/demo.
+        return "Error"
+
+
+#++++++++++++++++++H2O WAVE UI++++++++++++
+
 page = site['/ner_ui']
 
-# Add a Markdown card named `hello` to the page.
-# page['hello'] = ui.markdown_card(
-#     box='1 1 2 2',
-#     title='Hello World!',
-#     content='And now for something completely different!',
-# )
-text='asdf'
-page['ner'] = ui.form_card(box='1 1 4 10', items=[
-        ui.textbox(name='text', label='English', value=text or '', multiline=True),
-        ui.label('Pig Latin'),
-        ui.text(mifun(text) or '*Type in some text above to translate to Pig Latin!*'),
+text=''
+page['ner'] = ui.form_card(box='3 2 7 6', items=[
+        ui.textbox(name='text', label='Named Entity Recognition, please type in some text', value=text or '', multiline=True),
+        ui.label(' Results of the  Named Entity Recognition Model:'),
+        ui.text("CallApi(text)" or '*Type in some text above to Run Named Entity Recognition Model!!'),
     ])
-
-beer_verse = '''={{before}} bottles of beer on the wall, {{before}} bottles of beer.
-
-Take one down, pass it around, {{after}} bottles of beer on the wall...
-'''
-
-beer_card = page.add('wall', ui.markdown_card(
-    box='6 1 4 2',
-    title='99 Bottles of Beer',
-    content=beer_verse,
-    data=dict(before='99', after='98'),
-))
-
-
-
-for i in range(99, 0, -1):
-    beer_card.data.before = str(i)
-    beer_card.data.after = str(i - 1)
-    page.save()
-    time.sleep(1)
-
+page.save()
 
  
 
